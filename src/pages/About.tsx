@@ -1,112 +1,103 @@
-import { Code, GraduationCap, Briefcase } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function About() {
   return (
-    <div className="py-16 md:py-24">
-      <div className="container px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+    <div className="container py-16 md:py-24">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h1 className="text-3xl md:text-4xl font-bold mb-6">About Me</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-8">
           <div className="md:col-span-1">
-            <div className="sticky top-20">
-              <div className="aspect-square overflow-hidden rounded-xl mb-6">
-                <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=500&auto=format&fit=crop" 
-                  alt="Profile" 
-                  className="object-cover w-full h-full"
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="sticky top-24"
+            >
+              <div className="rounded-lg overflow-hidden mb-6">
+                <img
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=500&auto=format&fit=crop"
+                  alt="Profile"
+                  className="w-full object-cover aspect-square"
                 />
               </div>
               
-              <h1 className="text-2xl md:text-3xl font-bold tracking-tighter mb-3">
-                Your Name
-              </h1>
-              <p className="text-muted-foreground mb-6">
-                Full Stack Developer
-              </p>
+              <h2 className="text-2xl font-semibold mb-2">Your Name</h2>
+              <p className="text-muted-foreground mb-4">Web Developer & Designer</p>
               
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <Code className="mr-2 h-5 w-5 text-primary" />
-                  <span>Web Development</span>
-                </div>
-                <div className="flex items-center">
-                  <GraduationCap className="mr-2 h-5 w-5 text-primary" />
-                  <span>Computer Science, University Name</span>
-                </div>
-                <div className="flex items-center">
-                  <Briefcase className="mr-2 h-5 w-5 text-primary" />
-                  <span>5+ Years Experience</span>
-                </div>
+              <div className="border-t pt-4 mt-4">
+                <h3 className="font-medium mb-2">Contact Information</h3>
+                <p className="text-sm mb-1">your.email@example.com</p>
+                <p className="text-sm mb-1">Location: City, Country</p>
               </div>
-            </div>
+            </motion.div>
           </div>
           
-          <div className="md:col-span-2 space-y-8">
-            <section>
-              <h2 className="text-2xl font-bold tracking-tighter mb-4">About Me</h2>
-              <div className="prose max-w-none">
-                <p className="mb-4">
-                  Hello! I'm a passionate developer with expertise in building modern web applications. I enjoy creating intuitive user interfaces and robust backend systems.
-                </p>
-                <p className="mb-4">
-                  With over 5 years of experience in the industry, I've worked on a variety of projects ranging from small business websites to complex enterprise applications. I'm constantly learning and exploring new technologies to stay at the forefront of web development.
-                </p>
-                <p>
-                  When I'm not coding, you can find me hiking, reading, or experimenting with new recipes in the kitchen. I believe in a balanced approach to life and work, which helps me stay creative and productive.
-                </p>
-              </div>
-            </section>
+          <div className="md:col-span-2">
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="mb-12"
+            >
+              <h2 className="text-2xl font-semibold mb-4">My Story</h2>
+              <p className="text-muted-foreground mb-4">
+                I'm a passionate web developer with a strong background in creating modern and user-friendly web applications. 
+                With over X years of experience in the field, I've developed a deep understanding of both front-end and back-end technologies.
+              </p>
+              <p className="text-muted-foreground mb-4">
+                My journey in web development began when I discovered my passion for building things that live on the internet. 
+                Since then, I've been continuously learning and improving my skills to stay up-to-date with the latest technologies and best practices.
+              </p>
+              <p className="text-muted-foreground">
+                When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or enjoying outdoor activities to maintain a healthy work-life balance.
+              </p>
+            </motion.section>
             
-            <section>
-              <h2 className="text-2xl font-bold tracking-tighter mb-4">Experience</h2>
-              <div className="space-y-6">
-                <div className="border-l-2 pl-4 border-primary">
-                  <h3 className="font-semibold text-lg">Senior Developer</h3>
-                  <p className="text-primary">Company Name • 2021 - Present</p>
-                  <p className="text-muted-foreground mt-2">
-                    Led the development of a customer-facing web application, improving user engagement by 40%. Mentored junior developers and introduced best practices.
-                  </p>
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="mb-12"
+            >
+              <h2 className="text-2xl font-semibold mb-4">Education</h2>
+              <div className="border-l-2 border-muted pl-4 space-y-6">
+                <div>
+                  <h3 className="font-medium">Bachelor's Degree in Computer Science</h3>
+                  <p className="text-sm text-muted-foreground">University Name, 20XX - 20XX</p>
                 </div>
-                
-                <div className="border-l-2 pl-4 border-muted">
-                  <h3 className="font-semibold text-lg">Web Developer</h3>
-                  <p className="text-primary">Previous Company • 2018 - 2021</p>
-                  <p className="text-muted-foreground mt-2">
-                    Developed and maintained multiple client websites. Implemented responsive designs and optimized site performance.
-                  </p>
-                </div>
-                
-                <div className="border-l-2 pl-4 border-muted">
-                  <h3 className="font-semibold text-lg">Junior Developer</h3>
-                  <p className="text-primary">First Company • 2016 - 2018</p>
-                  <p className="text-muted-foreground mt-2">
-                    Assisted in frontend development tasks. Collaborated with designers to implement UI components and features.
-                  </p>
+                <div>
+                  <h3 className="font-medium">Relevant Certifications</h3>
+                  <p className="text-sm text-muted-foreground">Certification Name, Issuing Organization, Year</p>
                 </div>
               </div>
-            </section>
+            </motion.section>
             
-            <section>
-              <h2 className="text-2xl font-bold tracking-tighter mb-4">Education</h2>
-              <div className="space-y-6">
-                <div className="border-l-2 pl-4 border-primary">
-                  <h3 className="font-semibold text-lg">Master's in Computer Science</h3>
-                  <p className="text-primary">University Name • 2014 - 2016</p>
-                  <p className="text-muted-foreground mt-2">
-                    Specialized in web technologies and application development.
-                  </p>
-                </div>
-                
-                <div className="border-l-2 pl-4 border-muted">
-                  <h3 className="font-semibold text-lg">Bachelor's in Computer Science</h3>
-                  <p className="text-primary">University Name • 2010 - 2014</p>
-                  <p className="text-muted-foreground mt-2">
-                    Graduated with honors. Completed several projects in web and mobile development.
-                  </p>
-                </div>
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+            >
+              <h2 className="text-2xl font-semibold mb-4">Skills</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {[
+                  "HTML & CSS", "JavaScript", "TypeScript", 
+                  "React", "Node.js", "Next.js", 
+                  "UI/UX Design", "Responsive Design", "Git"
+                ].map((skill, index) => (
+                  <div key={index} className="bg-muted rounded-md p-3 text-center">
+                    {skill}
+                  </div>
+                ))}
               </div>
-            </section>
+            </motion.section>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

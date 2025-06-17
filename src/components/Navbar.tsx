@@ -1,77 +1,74 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
+import { cn } from "../lib/utils";
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  
+  const routes = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Projects", path: "/projects" },
+    { name: "Contact", path: "/contact" }
+  ];
+  
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="font-bold text-xl">
-          Portfolio
+        <Link to="/" className="flex items-center gap-2">
+          <span className="text-xl font-bold">Portfolio</span>
         </Link>
         
         {/* Mobile menu button */}
-        <Button variant="ghost" size="icon" className="md:hidden" onClick={toggleMenu}>
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        <Button
+          variant="ghost"
+          className="md:hidden"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+          <span className="sr-only">Toggle menu</span>
         </Button>
         
-        {/* Desktop navigation */}
-        <nav className="hidden md:flex gap-6">
-          <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
-            Home
-          </Link>
-          <Link to="/projects" className="text-muted-foreground hover:text-foreground transition-colors">
-            Projects
-          </Link>
-          <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">
-            About
-          </Link>
-          <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
-            Contact
-          </Link>
+        {/* Desktop menu */}
+        <nav className="hidden md:flex md:gap-6">
+          {routes.map((route) => (
+            <Link 
+              key={route.path}
+              to={route.path}
+              className={cn(
+                "text-md font-medium transition-colors hover:text-primary",
+                location.pathname === route.path ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              {route.name}
+            </Link>
+          ))}
         </nav>
+        
+        {/* Mobile menu */}
+        {isOpen && (
+          <div className="absolute inset-x-0 top-16 z-50 bg-background border-b md:hidden">
+            <nav className="flex flex-col space-y-4 p-4">
+              {routes.map((route) => (
+                <Link
+                  key={route.path}
+                  to={route.path}
+                  className={cn(
+                    "text-md font-medium transition-colors hover:text-primary p-2",
+                    location.pathname === route.path ? "text-primary" : "text-muted-foreground"
+                  )}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {route.name}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        )}
       </div>
-      
-      {/* Mobile navigation */}
-      {isMenuOpen && (
-        <div className="md:hidden container py-4 pb-6 border-b">
-          <nav className="flex flex-col space-y-4">
-            <Link 
-              to="/" 
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link 
-              to="/projects" 
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Projects
-            </Link>
-            <Link 
-              to="/about" 
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              About
-            </Link>
-            <Link 
-              to="/contact" 
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Contact
-            </Link>
-          </nav>
-        </div>
-      )}
     </header>
   );
 }

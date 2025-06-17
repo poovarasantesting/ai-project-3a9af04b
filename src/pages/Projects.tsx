@@ -1,120 +1,152 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
+import { Badge } from "../components/ui/badge";
+
+type Project = {
+  id: number;
+  title: string;
+  description: string;
+  tags: string[];
+  image: string;
+  liveUrl?: string;
+  githubUrl?: string;
+};
 
 export default function Projects() {
-  const projects = [
+  const [filter, setFilter] = useState<string | null>(null);
+  
+  const projects: Project[] = [
     {
       id: 1,
-      title: "E-commerce Platform",
-      description: "A full-featured online shop with cart functionality, user authentication, and payment processing.",
-      image: "https://images.unsplash.com/photo-1661956602868-6ae368943878?q=80&w=600&auto=format&fit=crop",
-      tags: ["React", "Node.js", "MongoDB", "Stripe"],
+      title: "E-Commerce Website",
+      description: "A fully responsive e-commerce platform with product catalog, shopping cart, and checkout functionality.",
+      tags: ["React", "Node.js", "MongoDB"],
+      image: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=500&auto=format&fit=crop",
       liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
+      githubUrl: "https://github.com/yourusername/project"
     },
     {
       id: 2,
       title: "Portfolio Website",
-      description: "A responsive portfolio website showcasing projects and skills with a modern UI design.",
-      image: "https://images.unsplash.com/photo-1658812291674-f6c7dea2fcbc?q=80&w=600&auto=format&fit=crop",
-      tags: ["React", "Tailwind CSS", "Framer Motion"],
+      description: "A personal portfolio website showcasing my projects and skills.",
+      tags: ["React", "Tailwind CSS"],
+      image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=500&auto=format&fit=crop",
       liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
+      githubUrl: "https://github.com/yourusername/project"
     },
     {
       id: 3,
       title: "Task Management App",
-      description: "A productivity application with task organization, reminders, and progress tracking.",
-      image: "https://images.unsplash.com/photo-1517842645767-c639042777db?q=80&w=600&auto=format&fit=crop",
+      description: "A productivity application for managing tasks and projects with team collaboration features.",
       tags: ["React", "Firebase", "Redux"],
+      image: "https://images.unsplash.com/photo-1512314889357-e157c22f938d?q=80&w=500&auto=format&fit=crop",
       liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
+      githubUrl: "https://github.com/yourusername/project"
     },
     {
       id: 4,
-      title: "Weather Dashboard",
-      description: "A weather application showing forecasts and current conditions using external API data.",
-      image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=600&auto=format&fit=crop",
-      tags: ["JavaScript", "API Integration", "CSS"],
+      title: "Weather Application",
+      description: "A weather forecasting application using public APIs to display current and future weather conditions.",
+      tags: ["JavaScript", "API", "CSS"],
+      image: "https://images.unsplash.com/photo-1561736778-92e52a7769ef?q=80&w=500&auto=format&fit=crop",
       liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    },
-    {
-      id: 5,
-      title: "Blog Platform",
-      description: "A content management system for creating and publishing blog articles with user comments.",
-      image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=600&auto=format&fit=crop",
-      tags: ["Next.js", "GraphQL", "PostgreSQL"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    },
-    {
-      id: 6,
-      title: "Social Media Dashboard",
-      description: "An analytics dashboard for tracking social media performance across multiple platforms.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop",
-      tags: ["React", "D3.js", "REST APIs"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
+      githubUrl: "https://github.com/yourusername/project"
     }
   ];
-
+  
+  // Get all unique tags
+  const allTags = Array.from(new Set(projects.flatMap(project => project.tags)));
+  
+  // Filter projects based on selected tag
+  const filteredProjects = filter 
+    ? projects.filter(project => project.tags.includes(filter))
+    : projects;
+  
   return (
-    <div className="py-16 md:py-24">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center text-center mb-12">
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tighter mb-4">My Projects</h1>
-          <p className="text-xl text-muted-foreground max-w-[700px]">
-            A collection of my work, side projects, and open-source contributions
-          </p>
+    <div className="container py-16 md:py-24">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h1 className="text-3xl md:text-4xl font-bold mb-6">My Projects</h1>
+        <p className="text-muted-foreground mb-8 max-w-3xl">
+          Here are some of the projects I've worked on. Each project represents a unique challenge and learning experience.
+        </p>
+        
+        {/* Filter Tags */}
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-2">
+            <Button 
+              variant={filter === null ? "default" : "outline"}
+              size="sm"
+              onClick={() => setFilter(null)}
+            >
+              All
+            </Button>
+            {allTags.map((tag) => (
+              <Button
+                key={tag}
+                variant={filter === tag ? "default" : "outline"}
+                size="sm"
+                onClick={() => setFilter(tag)}
+              >
+                {tag}
+              </Button>
+            ))}
+          </div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <div 
-              key={project.id} 
-              id={`project-${project.id}`}
-              className="group flex flex-col overflow-hidden rounded-lg border bg-background transition-all hover:shadow-md"
+        
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredProjects.map((project) => (
+            <motion.article
+              key={project.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="border rounded-lg overflow-hidden flex flex-col h-full bg-card hover:shadow-md transition-shadow"
             >
               <div className="aspect-video overflow-hidden">
                 <img 
                   src={project.image} 
-                  alt={project.title}
-                  className="object-cover w-full h-full transition-transform group-hover:scale-105 duration-300"
+                  alt={project.title} 
+                  className="w-full h-full object-cover transition-transform hover:scale-105"
                 />
               </div>
-              <div className="flex-1 p-6">
-                <h3 className="font-semibold text-xl mb-2">{project.title}</h3>
-                <p className="text-muted-foreground mb-4">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-6">
+              <div className="p-5 flex flex-col flex-grow">
+                <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+                <p className="text-muted-foreground mb-4 flex-grow">{project.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
                   {project.tags.map((tag) => (
-                    <span 
-                      key={tag} 
-                      className="px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full"
-                    >
-                      {tag}
-                    </span>
+                    <Badge key={tag} variant="secondary">{tag}</Badge>
                   ))}
                 </div>
+                <div className="flex gap-3 mt-auto">
+                  {project.githubUrl && (
+                    <Button asChild variant="outline" size="sm">
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <Github className="mr-2 h-4 w-4" />
+                        Code
+                      </a>
+                    </Button>
+                  )}
+                  {project.liveUrl && (
+                    <Button asChild size="sm">
+                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Live Demo
+                      </a>
+                    </Button>
+                  )}
+                </div>
               </div>
-              <div className="p-6 pt-0 mt-auto flex gap-3">
-                <Button variant="outline" size="sm" className="flex-1" asChild>
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
-                  </a>
-                </Button>
-                <Button variant="outline" size="sm" className="flex-1" asChild>
-                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                    <Github className="mr-2 h-4 w-4" /> Code
-                  </a>
-                </Button>
-              </div>
-            </div>
+            </motion.article>
           ))}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
